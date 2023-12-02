@@ -83,6 +83,9 @@ class DetailPage extends StatelessWidget {
                 ),
               ),
               listRacikan(),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),
@@ -92,7 +95,7 @@ class DetailPage extends StatelessWidget {
 
   SizedBox listRacikan() {
     return SizedBox(
-              height: 100,
+              height: 90,
               child: ListView.builder(
                 itemCount: makanan.bahan.length,
                 scrollDirection: Axis.horizontal,
