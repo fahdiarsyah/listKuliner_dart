@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:list_kuliner/detail_page.dart';
 import 'package:list_kuliner/makanan.dart';
 import 'package:list_kuliner/style.dart';
+import 'package:list_kuliner/http_helper.dart';
 
 class ListItem extends StatelessWidget {
   // final String nama;
@@ -13,11 +14,13 @@ class ListItem extends StatelessWidget {
   // final String kalori;
   // final List<String> gambarlain;
   // final List<Map<String, String>> bahan;
-  final Makanan menu;
+  final Makanan makanan;
+  HttpHelper api = HttpHelper();
 
-  const ListItem(
+  ListItem(
     {super.key,
-    required this.menu,
+    required this.makanan,
+    required this.api
   });
 
 
@@ -26,45 +29,57 @@ class ListItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(
-          context, MaterialPageRoute(builder: (context) => DetailPage(makanan: menu,),));
+          context, 
+          MaterialPageRoute(
+            builder: (context) => DetailPage(
+              makanan: makanan,
+              api: api
+              ),
+          ));
       },
       child: Container(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         height: 100,
         padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [BoxShadow(
-            color: boxShadColor,
-            offset: Offset(1, 2),
-            blurRadius: 6)
-          ]),
+        decoration: decorBox(),
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // widget untuk menampilkan gambar lokal
               menuImage(),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               descText(),
-              Icon(
+              const Icon(
                 Icons.food_bank_rounded,
-                color: iconColor,)
+                color: iconColor,
+                size: 30,
+              )
             ],
         ),
       ),
     );
   }
 
+  BoxDecoration decorBox() {
+    return const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        boxShadow: [BoxShadow(
+          color: boxShadColor,
+          offset: Offset(1, 2),
+          blurRadius: 6)
+        ]);
+  }
+
   ClipRRect menuImage() {
     return ClipRRect(  // Menyesuaikan ukuran gambar
-            child: Image.asset(
-              menu.gambar,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            child: Image.network(
+              api.url + makanan.gambar,
               height: 75,
               width: 85,
               fit: BoxFit.cover,
-              ),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
           );
   }
 
@@ -75,20 +90,20 @@ class ListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  menu.nama,
+                  makanan.nama,
                   style: textHeader1,
-                  
                 ),
-                SizedBox(height: 7),
+                const SizedBox(height: 7),
                 Text(
-                  menu.deskripsi,
-                  style: TextStyle(color: Colors.black38),
+                  makanan.deskripsi,
+                  style: const TextStyle(color: Colors.black38),
                   overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 11),
+                const SizedBox(height: 11),
                 Text(
-                  menu.harga,
-                  style: TextStyle(fontWeight: FontWeight.bold),),
+                  makanan.harga,
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black45),
+                ),
               ],
             ),
     );

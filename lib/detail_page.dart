@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:list_kuliner/makanan.dart';
 import 'package:list_kuliner/style.dart';
+import 'package:list_kuliner/http_helper.dart';
 
 class DetailPage extends StatelessWidget {
   final Makanan makanan;
+  HttpHelper api = HttpHelper();
 
-  const DetailPage(
+  DetailPage(
     {super.key,
-    required this.makanan}
-    );
+    required this.makanan,
+    required this.api}
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +24,13 @@ class DetailPage extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Image.asset(
-                    makanan.gambar,
+                  Image.network(
+                    api.url + makanan.gambar,
                     scale: 0.5,
                     ),
                     Container(
-                      margin: EdgeInsets.all(20),
-                      child: Row(
+                      margin: const EdgeInsets.all(20),
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ButtonBack(),
@@ -42,14 +45,14 @@ class DetailPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Text(
                   makanan.nama,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.white
                     ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -63,18 +66,18 @@ class DetailPage extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Text(
                   makanan.detail,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16),  
+                  style: const TextStyle(fontSize: 16),  
                 ),
               ),
               listGambar(),
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Text(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: const Text(
                   "Gambar Racikan",
                   style: textHeader1,
                 ),
@@ -95,8 +98,8 @@ class DetailPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.only(right: 10),
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.only(right: 10),
                     width: 120,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -125,7 +128,7 @@ class DetailPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(makanan.gambarlain[index])
@@ -144,10 +147,10 @@ class DetailPage extends StatelessWidget {
                       color: iconColor,
                     ),
                     Padding(
-                      padding: EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(6),
                       child: Text(
                         teks,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 13, 
                           fontWeight: FontWeight.bold
                         ),
@@ -204,7 +207,7 @@ class _ButtonLike extends State<ButtonLike> {
         },
         icon: Icon(
           isSelected ? Icons.favorite : Icons.favorite_border_outlined,
-          color:  Color.fromARGB(255, 205, 1, 1),
+          color:  const Color.fromARGB(255, 205, 1, 1),
         ),
       ),
     );
